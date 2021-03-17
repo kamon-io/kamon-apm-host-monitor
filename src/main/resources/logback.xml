@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" debug="false">
+
+
+  <conversionRule conversionWord="traceID" converterClass="kamon.instrumentation.logback.tools.TraceIDConverter"/>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{yyyy-MM-dd HH:mm:ss} | %-5level | %c -> %m%n</pattern>
+    </encoder>
+  </appender>
+
+  <!-- To shut up java.lang.ClassNotFoundException: jdk.internal.misc.Unsafe DEBUG message caused by old version of netty. -->
+  <logger name="io.netty" level="OFF"/>
+  <logger name="oshi" level="OFF"/>
+
+  <logger name="armeria.services" level="WARN"/>
+  <logger name="com.linecorp.armeria" level="INFO"/>
+
+  <root level="DEBUG">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>

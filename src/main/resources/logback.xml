@@ -16,6 +16,7 @@
 
   <logger name="armeria.services" level="WARN"/>
   <logger name="com.linecorp.armeria" level="INFO"/>
+  <logger name="com.linecorp.armeria.common.Flags" level="OFF"/>
 
   <root level="DEBUG">
     <appender-ref ref="STDOUT"/>

@@ -1,4 +1,4 @@
-package kamino.hostmetricsserver
+package kamon.hostmonitor
 
 import com.linecorp.armeria.common.{HttpResponse, HttpStatus}
 import com.linecorp.armeria.server.{HttpService, Server}
@@ -23,13 +23,13 @@ object EntryPoint extends App {
   private def run(cfg: Config): Unit = {
     val arana = aranaServer(cfg.port)
     arana.start().join()
-    logger.info("Host Metrics Server is up")
+    logger.info("Kamon Host Monitor is up")
 
     Runtime.getRuntime.addShutdownHook(new Thread() {
       override def run(): Unit = {
-        logger.debug("Stopping Host Metrics Server ...")
+        logger.debug("Stopping Kamon Host Monitor ...")
         arana.stop().join()
-        logger.info("Host Metrics Server is shut down")
+        logger.info("Kamon Host Monitor is shut down")
         Kamon.stopModules()
       }
     })

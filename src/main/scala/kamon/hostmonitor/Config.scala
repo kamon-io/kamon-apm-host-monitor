@@ -1,4 +1,4 @@
-package kamino.hostmetricsserver
+package kamon.hostmonitor
 
 case class Port(number: Int) extends AnyVal
 

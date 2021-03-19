@@ -1,6 +1,6 @@
 import com.typesafe.sbt.packager.docker.DockerChmodType
 
-dockerExposedPorts := Seq(8080)
+dockerExposedPorts := Seq(18081)
 dockerRepository := Some("kamino")
 dockerUpdateLatest := true
 packageName in Docker := "host-metrics-server"

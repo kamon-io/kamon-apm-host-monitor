@@ -1,4 +1,4 @@
-name := "host-metrics-server"
+name := "host-monitor"
 organization := "kamino"
 
 scalaVersion := "2.13.5"

@@ -14,7 +14,7 @@ scalacOptions := Seq(
 resolvers += Resolver.bintrayRepo("kamon-io", "releases")
 resolvers += Resolver.mavenLocal
 
-//version in Docker := scala.sys.process.Process("git rev-parse HEAD").lineStream.head
+version in Docker := scala.sys.process.Process("git rev-parse HEAD").lineStream.head
 
 val armeriaVersion = "1.5.0"
 val kamonVersion = "2.1.12"

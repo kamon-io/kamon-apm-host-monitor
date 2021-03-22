@@ -1,10 +1,10 @@
 import com.typesafe.sbt.packager.docker.DockerChmodType
 
-dockerExposedPorts := Seq(18081)
-dockerRepository := Some("kamino")
+dockerExposedPorts := Seq(5266)
+dockerRepository := Some("kamon")
 dockerUpdateLatest := true
-packageName in Docker := "host-metrics-server"
-maintainer in Docker := "kamino.io"
+packageName in Docker := "host-monitor"
+maintainer in Docker := "kamon.io"
 
 dockerChmodType := DockerChmodType.UserGroupWriteExecute
 daemonUserUid in Docker := Some("777")

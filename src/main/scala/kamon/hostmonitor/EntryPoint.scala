@@ -1,47 +1,30 @@
 package kamon.hostmonitor
 
-import com.linecorp.armeria.common.{HttpResponse, HttpStatus}
-import com.linecorp.armeria.server.{HttpService, Server}
 import com.typesafe.scalalogging.Logger
 import kamon.Kamon
-import pureconfig._
-import pureconfig.generic.auto._
 
 object EntryPoint extends App {
   Kamon.init()
   private val logger = Logger(getClass)
 
-  private def aranaServer(port: Port): Server = {
-    val status: HttpService = (_, _) => HttpResponse.of(HttpStatus.OK)
-    Server
-      .builder()
-      .http(port.number)
-      .service("/status", status) // so outside world can know we're still alive
-      .build()
-  }
-
-  private def run(cfg: Config): Unit = {
-    val arana = aranaServer(cfg.port)
-    arana.start().join()
+  private def run(): Unit = this.synchronized {
     logger.info("Kamon Host Monitor is up")
 
     Runtime.getRuntime.addShutdownHook(new Thread() {
       override def run(): Unit = {
-        logger.debug("Stopping Kamon Host Monitor ...")
-        arana.stop().join()
-        logger.info("Kamon Host Monitor is shut down")
+        logger.info("Stopping Kamon Host Monitor ...")
         Kamon.stopModules()
       }
     })
+
+    while (true) {
+      try this.wait(2000)
+      catch {
+        case _: InterruptedException =>
+          logger.info("Interrupted ...")
+      }
+    }
   }
 
-  logger.debug("Loading configuration ...")
-  ConfigSource.default.load[Config] match {
-    case Right(config)  =>
-      run(config)
-    case Left(failures) =>
-      logger.warn("Failed to load configuration")
-      failures.toList.foreach(f => logger.error(s"Configuration load failure: $f"))
-  }
-
+  run()
 }

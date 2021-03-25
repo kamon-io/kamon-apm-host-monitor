@@ -1,5 +1,5 @@
 name := "host-monitor"
-organization := "kamino"
+organization := "kamon.io"
 
 scalaVersion := "2.13.5"
 scalacOptions := Seq(
@@ -16,7 +16,7 @@ resolvers += Resolver.mavenLocal
 
 version in Docker := scala.sys.process.Process("git rev-parse HEAD").lineStream.head
 
-val kamonVersion = "2.1.12"
+val kamonVersion = "2.1.13"
 
 libraryDependencies ++= Seq(
   "ch.qos.logback"              % "logback-classic"      % "1.2.3",

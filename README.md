@@ -12,7 +12,7 @@ Service can be parameterized through environment variables. Those are:
 
 * `KAMON_API_KEY` *mandatory*: API key used by Kamon APM for ingesting the metrics
 * `KAMON_INGESTION_API` *optional*: The ingestion endpoint, by default `https://ingestion.apm.kamon.io/v1`
-* `KAMON_HOST_METRICS_PORT` *optional*: Service's port number, by default `18081`
+* `KAMON_STATUS_PAGE_PORT` *optional*: Service's Status page port number, by default `5266`
 
 Usage
 -----
@@ -22,12 +22,22 @@ Start the Kamon Host Monitor container by running:
 $ docker run --rm --network=host -e KAMON_API_KEY=<api key> kamon/host-monitor
 ```
 The service will start reporting host metrics to your Kamon APM environment associated with the API key.
-`--network=host` is needed for the service to properly report host's name.
+Using `--network=host` is the easiest way for the Kamon Host Monitor to know and report the correct host name.
 
-Host Monitor's `/status` endpoint can be used for liveness probe.
+Alternatively, `--hostname` option could be used instead of `--network` to the same effect (bash example):
 ```shell
-$ curl http://localhost:18081/status
-200 OK
+$ docker run --rm --hostname=`hostname` -e KAMON_API_KEY=<api key> -p 5266:5266 kamon/host-monitor
+```
+Note that, in this case, for Status page to be accessible its port needs to be exposed.
+
+Kamon's Status page can be used for liveness probe:
+```shell
+$ curl -I -XGET http://localhost:5266
+HTTP/1.1 200 OK 
+Content-Type: text/html
+Date: Tue, 23 Mar 2021 08:38:37 GMT
+connection: close
+Transfer-Encoding: chunked
 ```
 
 Dev Stuff
@@ -42,4 +52,4 @@ $ sbt compile
 $ sbt docker:publish
 ```
 
-Docker image building and publishing process will add Git's last commit id and `latest` tags to the published image.
+Docker image building and publishing process will tag the published image with Git's last commit id and `latest` tags.

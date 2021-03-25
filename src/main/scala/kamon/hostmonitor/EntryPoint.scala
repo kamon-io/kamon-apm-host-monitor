@@ -2,8 +2,18 @@ package kamon.hostmonitor
 
 import com.typesafe.scalalogging.Logger
 import kamon.Kamon
+import oshi.util.GlobalConfig
+
+import java.nio.file.{Files, Paths}
 
 object EntryPoint extends App {
+  {
+    val procPath = sys.env.getOrElse("PROCFS_PATH", "/host/proc")
+    if (Files.exists(Paths.get(procPath))) {
+      GlobalConfig.set("oshi.util.proc.path", procPath)
+    }
+  }
+
   Kamon.init()
   private val logger = Logger(getClass)
 

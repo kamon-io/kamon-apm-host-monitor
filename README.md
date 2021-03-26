@@ -1,5 +1,5 @@
-Kamon Host Monitor
-==================
+Kamon APM Host Monitor
+======================
 
 The purpose of this service is to report host metrics to Kamon APM.
 One instance should be deployed to every node in a cluster. Already
@@ -17,7 +17,7 @@ Service can be parameterized through environment variables. Those are:
 Usage
 -----
 
-Start the Kamon Host Monitor container by running:
+Start the Kamon APM Host Monitor container by running:
 ```shell
 $ docker run --rm --network=host -e KAMON_API_KEY=<api key> kamon/host-monitor
 ```

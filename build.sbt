@@ -16,7 +16,7 @@ resolvers += Resolver.mavenLocal
 
 version in Docker := scala.sys.process.Process("git rev-parse HEAD").lineStream.head
 
-val kamonVersion = "2.1.13"
+val kamonVersion = "2.1.15"
 
 libraryDependencies ++= Seq(
   "ch.qos.logback"              % "logback-classic"      % "1.2.3",

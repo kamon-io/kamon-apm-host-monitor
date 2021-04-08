@@ -14,7 +14,7 @@ object EntryPoint extends App {
     }
   }
 
-  Kamon.init()
+  Kamon.loadModules()
   private val logger = Logger(getClass)
 
   private def run(): Unit = this.synchronized {
